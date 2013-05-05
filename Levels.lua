@@ -59,7 +59,6 @@ Platform = Tile:extend
     end
 }
 
--- Water = Tile:extend
 Water = Animation:extend
 {
     width = 32,
@@ -67,23 +66,20 @@ Water = Animation:extend
     image = 'water.png',
 
     sequences = {
-      move1 = { frames = {3, 3, 3, 1, 2}, fps = 1 },
-      move2 = { frames = {1, 2, 3, 3, 3}, fps = 1 },
-      move3 = { frames = {3, 3, 1, 2, 3}, fps = 1 }
-      -- stay = { frames = {3}, fps = 0.1 }
+      move1 = { frames = {3, 3, 3, 3, 1, 2}, fps = 1 },
+      move2 = { frames = {1, 3, 3, 2}, fps = 1 },
+      move3 = { frames = {3, 3, 2, 3, 3}, fps = 1 }
     },
 
     seq = 'move1',
 
+    onNew = function ( self )
+      self:onEndSequence()
+    end,
+
     onEndSequence = function ( self )
-      local randomSeq = math.floor(math.random(4))
-      local cnt = 1
-      for i,v in pairs(self.sequences) do
-        cnt = cnt + 1
-        if cnt==randomSeq then
-          self.seq = i
-        end
-      end
+      local seqs = {'move1', 'move2', 'move3'}
+      self.seq = seqs[math.random(#seqs)]
     end,
 
     onUpdate = function ( self )
