@@ -1,7 +1,9 @@
+DEBUG = true
+
 require 'zoetrope'
+require 'tools'
 require 'Levels'
 require 'Player'
-repler = require 'repler'
 
 the.app = App:new
 {
@@ -22,10 +24,6 @@ the.app = App:new
         self.levels.platforms:collide(self.player)
         if the.keys:pressed('escape') then
             the.app:quit()
-        end
-        if the.keys:pressed('c') then
-            debug.debug()
-            -- repler.load()
         end
     end
 }
