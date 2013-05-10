@@ -14,13 +14,13 @@ Player = Animation:extend
     onUpdate = function (self)
         if the.keys:pressed('left') then
             self.velocity.x = -100
-      self:play('left')
+            self:play('left')
         elseif the.keys:pressed('right') then
             self.velocity.x = 100
-      self:play('right')
+            self:play('right')
         else
             self.velocity.x = 0
-      self:freeze()
+            self:freeze()
         end
 
         if the.keys:pressed(' ') and self.canJump then
@@ -45,11 +45,10 @@ Player = Animation:extend
     end,
 
     onCollide = function (self, other, xOverlap, yOverlap)
-        -- if horizontal < self.height then
         if other:instanceOf(Platform) then
             if self.velocity.y > 0 then
-            if self.y < other.y then
-            if yOverlap < (self.height-other.height) then --xOverlap > self.width / 10 then
+            if self.y < other.y then -- not necesary
+            if yOverlap < (self.height-other.height) then
                 self.velocity.y = 0
                 self.y = other.y - self.height
                 self.canJump = true

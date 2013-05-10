@@ -1,4 +1,5 @@
 DEBUG = true
+STRICT = true
 
 require 'zoetrope'
 require 'tools'
