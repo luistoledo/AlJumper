@@ -1,25 +1,24 @@
 Levels = Group:extend {
   level1 = {
-  '                         ',
-  '                         ',
-  '                         ',
-  '                         ',
-  '       #######  ###    ##',
-  '                        #',
-  '    ##              #####',
-  '##                      #',
-  '     ###   ####        ##',
-  ' ##                     #',
-  '    ###                 #',
-  '        #               #',
-  'P          ######       #',
-  '    ##                   ',
-  '###################    ##',
-  '~~~~~~~~~~~~~~~~~~~~~~~~~',
-  '~~~~~~~~~~~~~~~~~~~~~~~~~',
-  '~~~~~~~~~~~~~~~~~~~~~~~~~',
-  '~~~~~~~~~~~~~~~~~~~~~~~~~',
-  '~~~~~~~~~~~~~~~~~~~~~~~~~'
+  '@@@@@@@@@@@@@@@@@@@@@@@@@',
+  '@                       @',
+  '@                       @',
+  '@                       @',
+  '@      #######  ###    #@',
+  '@                       @',
+  '@   ##              ####@',
+  '@#                      @',
+  '@    ###   ####        #@',
+  '@##                     @',
+  '@   ###                 @',
+  '@       #               @',
+  '@P         ######       @',
+  '@   ##                  @',
+  '@#################    ##@',
+  '@~~~~~~~~~~~~~~~~~~~~~~~@',
+  '@~~~~~~~~~~~~~~~~~~~~~~~@',
+  '@~~~~~~~~~~~~~~~~~~~~~~~@',
+  '@@@@@@@@@@@@@@@@@@@@@@@@@'
   },
 
   xPlayer = 0,
@@ -34,11 +33,14 @@ Levels = Group:extend {
         if (v:sub(j,j) == '#') then
           self.platforms:add(Platform:new({x=(j-1)*Platform.width, y=(i-1)*Platform.height}))
         end
-        if (v:sub(j,j) == '~') then
-          self.platforms:add(Water:new({x=(j-1)*Water.width, y=(i-1)*Water.height}))
+        if (v:sub(j,j) == '@') then
+          self.platforms:add(Impassable:new({x=(j-1)*Impassable.width, y=(i-1)*Impassable.height}))
         end
         if (v:sub(j,j) == 'P') then
           self.xPlayer, self.yPlayer = (j-1)*Platform.width, (i-1)*Platform.height
+        end
+        if (v:sub(j,j) == '~') then
+          self.platforms:add(Water:new({x=(j-1)*Water.width, y=(i-1)*Water.height}))
         end
       end
     end
@@ -56,6 +58,17 @@ Platform = Tile:extend
         if horizontal < 0 then
             self:displace(other)
         end
+    end
+}
+
+Impassable = Tile:extend
+{
+    width = 32,
+    height = 32,
+    image = 'impassable.png',
+
+    onCollide = function (self, other, horizontal)
+      self:displace(other)
     end
 }
 
