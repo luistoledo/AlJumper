@@ -8,17 +8,16 @@ require 'Player'
 
 the.app = App:new
 {
-    onRun = function (self)
+    onRun = function (self, level)
+        if level == nil then level = 1 end
+
         self.levels = Levels:new()
-        self.levels.platforms = self.levels:createLevel(self.levels.level1)
+        self.levels.platforms = self.levels:createLevel(level)
         self.player = Player:new({ x = self.levels.xPlayer,
                                  y = self.levels.yPlayer })
 
         self:add(self.levels.platforms)
         self:add(self.player)
-        -- self.platforms = Group:new()
-        -- self.platforms:add(Platform:new({ x = 0, y = 400 }))
-        -- self:add(self.platforms)
     end,
 
     onUpdate = function (self)
@@ -26,5 +25,11 @@ the.app = App:new
         if the.keys:pressed('escape') then
             the.app:quit()
         end
+    end,
+
+    gotoNextLevel = function (self)
+        self.levels.sprites = {}
+        self.levels.platforms = {}
+        self:onRun(2)
     end
 }

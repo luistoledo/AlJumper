@@ -1,33 +1,67 @@
 Levels = Group:extend {
-  level1 = {
-  '@@@@@@@@@@@@@@@@@@@@@@@@@',
-  '@                       @',
-  '@                       @',
-  '@                       @',
-  '@      #######  ###    #@',
-  '@                       @',
-  '@   ##              ####@',
-  '@#                      @',
-  '@    ###   ####        #@',
-  '@##                     @',
-  '@   ###                 @',
-  '@       #               @',
-  '@P         ######       @',
-  '@   ##                  @',
-  '@#################    ##@',
-  '@~~~~~~~~~~~~~~~~~~~~~~~@',
-  '@~~~~~~~~~~~~~~~~~~~~~~~@',
-  '@~~~~~~~~~~~~~~~~~~~~~~~@',
-  '@@@@@@@@@@@@@@@@@@@@@@@@@'
+  maps = {
+    {
+    -- level 1
+    '@@@@@@@@@@@@@@@@@@@@@@@@@',
+    '@                       @',
+    '@                       @',
+    '@                       @',
+    '@      #######  ###    #@',
+    '@                       @',
+    '@   ##              ####@',
+    '@#                      @',
+    '@    ###   ####        #@',
+    '@##                     @',
+    '@   ###                 @',
+    '@       #  E            @',
+    '@P         ######       @',
+    '@   ##                  @',
+    '@#################    ##@',
+    '@~~~~~~~~~~~~~~~~~~~~~~~@',
+    '@~~~~~~~~~~~~~~~~~~~~~~~@',
+    '@~~~~~~~~~~~~~~~~~~~~~~~@',
+    '@@@@@@@@@@@@@@@@@@@@@@@@@'
+    },
+
+    {
+    -- level 2
+    '@@@@@@@@@@@@@@@@@@@@@@@@@',
+    '@                       @',
+    '@                       @',
+    '@        P              @',
+    '@      #######  ###    #@',
+    '@                       @',
+    '@   ##              ####@',
+    '@#                      @',
+    '@    ###   ####        #@',
+    '@##                     @',
+    '@   ###                 @',
+    '@       #               @',
+    '@          ######       @',
+    '@   ##       E          @',
+    '@#################    ##@',
+    '@~~~~~~~~~~~~~~~~~~~~~~~@',
+    '@~~~~~~~~~~~~~~~~~~~~~~~@',
+    '@~~~~~~~~~~~~~~~~~~~~~~~@',
+    '@@@@@@@@@@@@@@@@@@@@@@@@@'
+    }
   },
 
   xPlayer = 0,
   yPlayer = 0,
 
+  currentLevel = 1,
+
   platforms = Group:new(),
   
-  createLevel = function(self, level)
-    -- local pl = Group:new()
+  createLevel = function(self, levelId)
+    self.currentLevel = levelId
+
+    level = self.maps[levelId]
+    print("--" .. levelId)
+
+    self.platforms = Group:new()
+
     for i,v in ipairs(level) do
       for j=0, #v do
         if (v:sub(j,j) == '#') then
@@ -35,6 +69,9 @@ Levels = Group:extend {
         end
         if (v:sub(j,j) == '@') then
           self.platforms:add(Impassable:new({x=(j-1)*Impassable.width, y=(i-1)*Impassable.height}))
+        end
+        if (v:sub(j,j) == 'E') then
+          self.platforms:add(ExitDoor:new({x=(j-1)*ExitDoor.width, y=(i-1)*ExitDoor.height}))
         end
         if (v:sub(j,j) == 'P') then
           self.xPlayer, self.yPlayer = (j-1)*Platform.width, (i-1)*Platform.height
@@ -45,6 +82,22 @@ Levels = Group:extend {
       end
     end
     return self.platforms
+  end
+}
+
+ExitDoor = Tile:extend
+{
+
+  width = 32,
+  height = 32,
+  image = 'exitDoorOpen.png',
+
+  state = 'open',
+
+  onCollide = function ( self, other )
+    if self.state == 'open' then
+      the.app:gotoNextLevel()
+    end
   end
 }
 
