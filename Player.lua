@@ -2,7 +2,7 @@ Player = Animation:extend
 {
     width = 32,
     height = 48,
-    image = 'player.png',
+    image = 'resources/images/player.png',
   sequences = 
   {
     right = { frames = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2}, fps = 8 },
@@ -24,7 +24,7 @@ Player = Animation:extend
         end
 
         if the.keys:pressed(' ') and self.canJump then
-            -- playSound('jump.ogg')
+            playSound('resources/audios/jump.ogg')
             self.velocity.y = -300
             self.canJump = false
         end

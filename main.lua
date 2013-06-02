@@ -2,7 +2,7 @@ DEBUG = true
 STRICT = true
 
 require 'zoetrope'
-require 'tools'
+require 'utils/tools'
 require 'Levels'
 require 'Player'
 require 'maps'

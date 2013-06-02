@@ -31,7 +31,7 @@ Platform = Tile:extend
 {
     width = 32,
     height = 32,
-    image = 'brick.png',
+    image = 'resources/images/brick.png',
 
     onCollide = function (self, other, horizontal)
         if horizontal < 0 then
@@ -44,7 +44,7 @@ Impassable = Tile:extend
 {
     width = 32,
     height = 32,
-    image = 'impassable.png',
+    image = 'resources/images/impassable.png',
 
     onCollide = function (self, other, horizontal)
       self:displace(other)
@@ -55,7 +55,7 @@ Water = Animation:extend
 {
     width = 32,
     height = 32,
-    image = 'water.png',
+    image = 'resources/images/water.png',
 
     sequences = {
       move1 = { frames = {3, 3, 3, 3, 1, 2}, fps = 1 },
