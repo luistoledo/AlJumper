@@ -5,24 +5,20 @@ require 'zoetrope'
 require 'tools'
 require 'Levels'
 require 'Player'
+require 'maps'
 
 the.app = App:new
 {
     onRun = function (self)
-        self.levels = Levels:new()
-        self.levels.platforms = self.levels:createLevel(self.levels.level1)
-        self.player = Player:new({ x = self.levels.xPlayer,
-                                 y = self.levels.yPlayer })
+        self.view = Levels:new()
+        self.player = Player:new({ x = self.view.xPlayer,
+                                 y = self.view.yPlayer })
 
-        self:add(self.levels.platforms)
-        self:add(self.player)
-        -- self.platforms = Group:new()
-        -- self.platforms:add(Platform:new({ x = 0, y = 400 }))
-        -- self:add(self.platforms)
+        self.view:add(self.player)
     end,
 
     onUpdate = function (self)
-        self.levels.platforms:collide(self.player)
+        self.view:collide(self.player)
         if the.keys:pressed('escape') then
             the.app:quit()
         end

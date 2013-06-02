@@ -47,7 +47,7 @@ Player = Animation:extend
     onCollide = function (self, other, xOverlap, yOverlap)
         if other:instanceOf(Impassable) or other:instanceOf(Platform) then
             if self.velocity.y > 0 then
-            if self.y < other.y then -- not necesary
+            if self.y < other.y then
             if yOverlap < (self.height-other.height) then
                 self.velocity.y = 0
                 self.y = other.y - self.height

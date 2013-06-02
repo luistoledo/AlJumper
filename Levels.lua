@@ -1,50 +1,29 @@
-Levels = Group:extend {
-  level1 = {
-  '@@@@@@@@@@@@@@@@@@@@@@@@@',
-  '@                       @',
-  '@                       @',
-  '@                       @',
-  '@      #######  ###    #@',
-  '@                       @',
-  '@   ##              ####@',
-  '@#                      @',
-  '@    ###   ####        #@',
-  '@##                     @',
-  '@   ###                 @',
-  '@       #               @',
-  '@P         ######       @',
-  '@   ##                  @',
-  '@#################    ##@',
-  '@~~~~~~~~~~~~~~~~~~~~~~~@',
-  '@~~~~~~~~~~~~~~~~~~~~~~~@',
-  '@~~~~~~~~~~~~~~~~~~~~~~~@',
-  '@@@@@@@@@@@@@@@@@@@@@@@@@'
-  },
-
-  xPlayer = 0,
-  yPlayer = 0,
-
-  platforms = Group:new(),
+Levels = View:extend {
   
-  createLevel = function(self, level)
-    -- local pl = Group:new()
+  onNew = function(self)
+    self:loadASCIIMap(1)
+    self.focus = the.player
+  end,
+  
+  loadASCIIMap = function(self, levelNumber)
+    level = Maps[levelNumber]
+
     for i,v in ipairs(level) do
       for j=0, #v do
         if (v:sub(j,j) == '#') then
-          self.platforms:add(Platform:new({x=(j-1)*Platform.width, y=(i-1)*Platform.height}))
+          self:add(Platform:new({x=(j-1)*Platform.width, y=(i-1)*Platform.height}))
         end
         if (v:sub(j,j) == '@') then
-          self.platforms:add(Impassable:new({x=(j-1)*Impassable.width, y=(i-1)*Impassable.height}))
+          self:add(Impassable:new({x=(j-1)*Impassable.width, y=(i-1)*Impassable.height}))
         end
         if (v:sub(j,j) == 'P') then
           self.xPlayer, self.yPlayer = (j-1)*Platform.width, (i-1)*Platform.height
         end
         if (v:sub(j,j) == '~') then
-          self.platforms:add(Water:new({x=(j-1)*Water.width, y=(i-1)*Water.height}))
+          self:add(Water:new({x=(j-1)*Water.width, y=(i-1)*Water.height}))
         end
       end
     end
-    return self.platforms
   end
 }
 
