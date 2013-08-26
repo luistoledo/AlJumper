@@ -1,12 +1,14 @@
 Levels = View:extend {
   
-  onNew = function(self)
-    self:loadASCIIMap(1)
-    self.focus = the.player
-  end,
+  currentLevel = 1,
   
   loadASCIIMap = function(self, levelNumber)
+    print(levelNumber)
+    print(#Maps)
+    if levelNumber > #Maps then levelNumber = 1 end
     level = Maps[levelNumber]
+
+    local p
 
     for i,v in ipairs(level) do
       for j=0, #v do
@@ -17,13 +19,16 @@ Levels = View:extend {
           self:add(Impassable:new({x=(j-1)*Impassable.width, y=(i-1)*Impassable.height}))
         end
         if (v:sub(j,j) == 'P') then
-          self.xPlayer, self.yPlayer = (j-1)*Platform.width, (i-1)*Platform.height
+          p = Player:new({x = (j-1)*Platform.width, y = (i-1)*Platform.height})
         end
         if (v:sub(j,j) == '~') then
           self:add(Water:new({x=(j-1)*Water.width, y=(i-1)*Water.height}))
         end
       end
     end
+
+    self:add(p)
+    currentLevel = levelNumber
   end
 }
 
